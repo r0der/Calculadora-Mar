@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora de Productos - Laboratorios Mar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* RESET SEGURO PARA NOTION Y CHROME */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* BODY */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: radial-gradient(circle at top, #0f2a44, #081724);
+    color: #ffffff;
+}
+
+/* CONTENEDOR GENERAL */
+.container {
+    max-width: 420px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* LOGO */
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 100%;
+    max-width: 360px;
+    border-radius: 12px;
+}
+
+/* TARJETA CALCULADORA */
+.calculator {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    overflow: hidden; /* CLAVE */
+}
+
+/* TITULO */
+h2 {
+    text-align: center;
+    margin: 0 0 15px 0;
+    font-weight: 600;
+}
+
+/* LABEL */
+label {
+    display: block;
+    margin-top: 14px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* INPUTS – FIX DEFINITIVO */
+input {
+    width: calc(100% - 2px);
+    padding: 12px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-size: 16px;
+    background: #f1f5f9;
+    color: #0f172a;
+    display: block;
+}
+
+/* FOCO INPUT */
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #38bdf8;
+}
+
+/* QUITAR SPINNERS */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* BOTONES */
+button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(37,99,235,0.5);
+}
+
+/* RESULTADO */
+.result {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.85);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* TEXTO DESTACADO */
+.result strong {
+    color: #38bdf8;
+}
+
+/* BOTON COPIAR */
+.copy-btn {
+    margin-top: 12px;
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+}
+
+/* MENSAJE COPIADO */
+.copy-msg {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #5eead4;
+    display: none;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 12px;
+    opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LOGO -->
+    <div class="logo">
+        <img src="logoCalculadora.png" alt="Laboratorios Mar - Calculadora de Productos">
+    </div>
+
+    <!-- CALCULADORA -->
+    <div class="calculator">
+        <h2>Calculadora de Productos</h2>
+
+        <label>Precio unitario ($)</label>
+        <input type="number" id="price" placeholder="Ej: 4000">
+
+        <label>Cantidad de unidades</label>
+        <input type="number" id="quantity" placeholder="Ej: 1">
+
+        <label>Descuento (%)</label>
+        <input type="number" id="discount" placeholder="Ej: 38%">
+
+        <button onclick="calculate()">Calcular</button>
+
+        <div class="result" id="result" style="display:none;"></div>
+
+        <button class="copy-btn" onclick="copyTotal()" id="copyBtn" style="display:none;">
+            Copiar total
+        </button>
+
+        <div class="copy-msg" id="copyMsg">Total copiado ✔</div>
+    </div>
+
+    <footer>
+        Laboratorios Mar · Herramienta de cálculo
+    </footer>
+
+</div>
+
+<script>
+let finalTotalGlobal = 0;
+
+function calculate() {
+    const price = parseFloat(document.getElementById("price").value) || 0;
+    const quantity = parseInt(document.getElementById("quantity").value) || 0;
+    const discount = parseFloat(document.getElementById("discount").value) || 0;
+
+    const total = price * quantity;
+    const discountAmount = total * (discount / 100);
+    finalTotalGlobal = total - discountAmount;
+
+    const resultDiv = document.getElementById("result");
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = `
+        <div><strong>Total sin descuento:</strong> $${total.toFixed(2)}</div>
+        <div><strong>Descuento aplicado:</strong> -$${discountAmount.toFixed(2)}</div>
+        <div><strong>Total final:</strong> $${finalTotalGlobal.toFixed(2)}</div>
+    `;
+
+    document.getElementById("copyBtn").style.display = "block";
+    document.getElementById("copyMsg").style.display = "none";
+}
+
+function copyTotal() {
+    navigator.clipboard.writeText(`$${finalTotalGlobal.toFixed(2)}`).then(() => {
+        const msg = document.getElementById("copyMsg");
+        msg.style.display = "block";
+        setTimeout(() => msg.style.display = "none", 2000);
+    });
+}
+</script>
+
+</body>
+</html>
