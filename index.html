@@ -211,15 +211,24 @@ function calculate() {
 }
 
 function copyTotal() {
-    navigator.clipboard.writeText(`$${finalTotalGlobal.toFixed(2)}`).then(() => {
-        const msg = document.getElementById("copyMsg");
-        msg.style.display = "block";
-        setTimeout(() => msg.style.display = "none", 2000);
+    const tempInput = document.createElement("input");
+    tempInput.value = `$${finalTotalGlobal.toFixed(2)}`;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999);
+
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+
+    const msg = document.getElementById("copyMsg");
+    msg.style.display = "block";
+    setTimeout(() => msg.style.display = "none", 2000);
     });
 }
 </script>
 
 </body>
 </html>
+
 
 
