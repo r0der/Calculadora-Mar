@@ -6,21 +6,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* RESET SEGURO PARA NOTION Y CHROME */
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
-/* BODY */
 body {
     margin: 0;
     padding: 0;
     font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background: radial-gradient(circle at top, #0f2a44, #081724);
-    color: #ffffff;
+    background: #ffffff;
+    color: #0f172a;
 }
 
-/* CONTENEDOR GENERAL */
 .container {
     max-width: 420px;
     margin: auto;
@@ -30,30 +27,31 @@ body {
 /* LOGO */
 .logo {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .logo img {
     width: 100%;
-    max-width: 360px;
-    border-radius: 12px;
+    max-width: 340px;
+    border-radius: 14px;
+    background: #e6f4fb;
+    padding: 10px;
 }
 
-/* TARJETA CALCULADORA */
+/* TARJETA */
 .calculator {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(8px);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-    overflow: hidden; /* CLAVE */
+    background: #f0f9ff;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.12);
 }
 
 /* TITULO */
 h2 {
     text-align: center;
-    margin: 0 0 15px 0;
+    margin: 0 0 16px 0;
     font-weight: 600;
+    color: #0369a1;
 }
 
 /* LABEL */
@@ -61,29 +59,28 @@ label {
     display: block;
     margin-top: 14px;
     font-size: 14px;
-    opacity: 0.9;
+    color: #075985;
 }
 
-/* INPUTS – FIX DEFINITIVO */
+/* INPUTS */
 input {
-    width: calc(100% - 2px);
+    width: 100%;
     padding: 12px;
     margin-top: 6px;
-    border-radius: 8px;
-    border: 1px solid transparent;
+    border-radius: 10px;
+    border: 1px solid #bae6fd;
     font-size: 16px;
-    background: #f1f5f9;
+    background: #ffffff;
     color: #0f172a;
-    display: block;
 }
 
-/* FOCO INPUT */
 input:focus {
     outline: none;
-    box-shadow: 0 0 0 2px #38bdf8;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56,189,248,0.35);
 }
 
-/* QUITAR SPINNERS */
+/* Quitar spinners */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -99,39 +96,37 @@ button {
     margin-top: 18px;
     padding: 14px;
     font-size: 16px;
-    font-weight: bold;
-    background: linear-gradient(135deg, #2563eb, #1e40af);
+    font-weight: 600;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
     color: #ffffff;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 button:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(37,99,235,0.5);
+    box-shadow: 0 6px 18px rgba(56,189,248,0.45);
 }
 
 /* RESULTADO */
 .result {
     margin-top: 18px;
     padding: 14px;
-    border-radius: 12px;
-    background: rgba(15, 23, 42, 0.85);
+    border-radius: 14px;
+    background: #e0f2fe;
     font-size: 15px;
     line-height: 1.6;
 }
 
-/* TEXTO DESTACADO */
 .result strong {
-    color: #38bdf8;
+    color: #0369a1;
 }
 
 /* BOTON COPIAR */
 .copy-btn {
-    margin-top: 12px;
-    background: linear-gradient(135deg, #0d9488, #0f766e);
+    background: linear-gradient(135deg, #22d3ee, #06b6d4);
 }
 
 /* MENSAJE COPIADO */
@@ -139,16 +134,16 @@ button:hover {
     text-align: center;
     margin-top: 8px;
     font-size: 13px;
-    color: #5eead4;
+    color: #0284c7;
     display: none;
 }
 
 /* FOOTER */
 footer {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 16px;
     font-size: 12px;
-    opacity: 0.6;
+    color: #64748b;
 }
 </style>
 </head>
@@ -157,12 +152,10 @@ footer {
 
 <div class="container">
 
-    <!-- LOGO -->
     <div class="logo">
-        <img src="logoCalculadora.png" alt="Laboratorios Mar - Calculadora de Productos">
+        <img src="logoCalculadora.png" alt="Calculadora de Productos - Laboratorios Mar">
     </div>
 
-    <!-- CALCULADORA -->
     <div class="calculator">
         <h2>Calculadora de Productos</h2>
 
@@ -173,7 +166,7 @@ footer {
         <input type="number" id="quantity" placeholder="Ej: 1">
 
         <label>Descuento (%)</label>
-        <input type="number" id="discount" placeholder="Ej: 38%">
+        <input type="number" id="discount" placeholder="Ej: 10">
 
         <button onclick="calculate()">Calcular</button>
 
